@@ -1,6 +1,8 @@
 const path = require('path')
 const express = require('express')
 const handlebars = require('express-handlebars')
+const hbshelpers = require('handlebars-helpers')
+const multihelpers = hbshelpers()
 const routes = require('./routes')
 const flash = require('connect-flash')
 const methodOverride = require('method-override')
@@ -18,7 +20,8 @@ const port = process.env.PORT || 3000
 const SESSION_SECRET = 'secret'
 
 // 註冊 Handlebars 樣板引擎，並指定副檔名為 .hbs
-app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
+app.engine('hbs', handlebars({ extname: '.hbs', helpers: { multihelpers, handlebarsHelpers } }))
+
 // 設定使用 Handlebars 做為樣板引擎
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
